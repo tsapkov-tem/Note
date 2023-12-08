@@ -57,3 +57,4 @@ C:\Users\Administrator\source\repos\Notes\Notes\obj\Debug\net7.0\refint\Notes.dl
 C:\Users\Administrator\source\repos\Notes\Notes\obj\Debug\net7.0\Notes.pdb
 C:\Users\Administrator\source\repos\Notes\Notes\obj\Debug\net7.0\Notes.genruntimeconfig.cache
 C:\Users\Administrator\source\repos\Notes\Notes\obj\Debug\net7.0\ref\Notes.dll
+C:\Users\Administrator\source\repos\Notes\Notes\bin\Debug\net7.0\NLog.dll

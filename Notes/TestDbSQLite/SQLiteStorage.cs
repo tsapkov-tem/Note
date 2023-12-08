@@ -17,10 +17,19 @@ namespace Notes.TestDbSQLite
         /// <summary>
         /// Создать новый класс взаимодействия с контекстом SQLite. 
         /// </summary>
-        /// <param name="connection"> Строка подключения к БД. </param>
-        public SQLiteStorage(string connection)
+        /// <exception cref="NullReferenceException">Не указана строка подключения.</exception>
+        public SQLiteStorage()
         {
-            StorageContext = new SQLiteDbContext(connection);
+            var config = new ConfigurationBuilder()
+                        .AddJsonFile("appsettings.json")
+                        .SetBasePath(Directory.GetCurrentDirectory())
+                        .Build();
+            string connect = config.GetConnectionString("TestConnection");
+            if (string.IsNullOrWhiteSpace(connect))
+            {
+                throw new NullReferenceException("Строка подключения не указанна в файле конфигурации.");
+            }
+            StorageContext = new SQLiteDbContext(connect);
         }
 
         /// <summary>

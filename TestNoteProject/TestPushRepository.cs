@@ -17,7 +17,7 @@ namespace TestNoteProject
         [TestMethod]
         public void TestAdd()
         {
-            IStorage storage = new SQLiteStorage("Data Source= #TestDb.db");
+            IStorage storage = new SQLiteStorage();
             var pushRepos = storage.GetRepository<IPushRepository>();
             string title = Guid.NewGuid().ToString();
             string text = Guid.NewGuid().ToString();

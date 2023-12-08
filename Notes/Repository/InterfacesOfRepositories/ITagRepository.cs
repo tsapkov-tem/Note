@@ -2,5 +2,5 @@
 
 namespace Notes.Repository.InterfacesOfRepositories
 {
-    public interface ITagRepository : IRepository, ICrudRepository<Tag> { }
+    public interface ITagRepository : IRepository, ICrudRepository<Tag> {}
 }

@@ -16,7 +16,7 @@ namespace TestNoteProject
         [TestMethod]
         public void TestGetRepository_Valid()
         {
-            IStorage storage = new SQLiteStorage("Data source = ##TestDb.db");
+            IStorage storage = new SQLiteStorage();
             var noteRepos = storage.GetRepository<INoteRepository>();
             var tagRepos = storage.GetRepository<ITagRepository>();
             var pushRepos = storage.GetRepository<IPushRepository>();
@@ -31,7 +31,7 @@ namespace TestNoteProject
         [TestMethod]
         public void TestGetRepository_Invalid()
         {
-            IStorage storage = new SQLiteStorage("Data source = ##TestDb.db");
+            IStorage storage = new SQLiteStorage();
             var invalidRepos = storage.GetRepository<IRepos_Invalid>();
             Assert.IsTrue(invalidRepos is null);
         }

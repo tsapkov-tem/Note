@@ -22,7 +22,7 @@ namespace TestNoteProject
 
             string title3 = Guid.NewGuid().ToString();
             string text3 = Guid.NewGuid().ToString();
-            Random random = new Random();
+            var random = new Random();
             int days = random.Next(30);
             DateTime dateTime3 = DateTime.Now.AddDays(days);
             var note3 = new Note(title3, text3, dateTime3);
@@ -39,7 +39,7 @@ namespace TestNoteProject
         [TestMethod]
         public void NoteCreate_Invalid()
         {
-            StringBuilder builder = new StringBuilder();
+            var builder = new StringBuilder();
 
             builder.Insert(0, Guid.NewGuid().ToString(), 10);
             string title1 = builder.ToString();
@@ -52,7 +52,7 @@ namespace TestNoteProject
 
             string title3 = Guid.NewGuid().ToString();
             string text3 = Guid.NewGuid().ToString();
-            Random random = new Random();
+            var random = new Random();
             int days = random.Next(30);
             DateTime dateTime3 = DateTime.Now.AddDays(-days);
 
@@ -79,7 +79,7 @@ namespace TestNoteProject
         [TestMethod]
         public void TagCreate_Invalid()
         {
-            StringBuilder builder = new StringBuilder();
+            var builder = new StringBuilder();
             builder.Insert(0, Guid.NewGuid().ToString(), 10);
             string name = builder.ToString();
 
@@ -91,7 +91,7 @@ namespace TestNoteProject
         {
             string title = Guid.NewGuid().ToString();
             string text = Guid.NewGuid().ToString();
-            Random random = new Random();
+            var random = new Random();
             int days = random.Next(30);
             DateTime dateTime = DateTime.Now.AddDays(days);
             var note = new Note(title, text, dateTime);

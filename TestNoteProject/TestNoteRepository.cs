@@ -13,16 +13,16 @@ namespace TestNoteProject
         [TestMethod]
         public void TestAdd()
         {
-            IStorage storage = new SQLiteStorage("Data Source= #TestDb.db");
+            IStorage storage = new SQLiteStorage();
             var noteRepos = storage.GetRepository<INoteRepository>();
             
 
             string title = Guid.NewGuid().ToString();
             string text = Guid.NewGuid().ToString();
-            Random random = new Random();
+            var random = new Random();
             int days = random.Next(30);
             DateTime dateTime = DateTime.Now.AddDays(days);
-            Note note = new Note(title, text, dateTime);
+            var note = new Note(title, text, dateTime);
 
             Assert.AreEqual(noteRepos.Create(note), note);
         }
@@ -30,7 +30,7 @@ namespace TestNoteProject
         [TestMethod]
         public void TestRead()
         {
-            IStorage storage = new SQLiteStorage("Data Source= #TestDb.db");
+            IStorage storage = new SQLiteStorage();
             var noteRepos = storage.GetRepository<INoteRepository>();
 
             string title1 = "title1";
@@ -69,18 +69,18 @@ namespace TestNoteProject
 
             Assert.IsTrue(slice1.Contains(note1));
             Assert.IsTrue(slice1.Contains(note2));
-            Assert.AreEqual(slice1.Count(), 2);
+            Assert.AreEqual(slice1.Count, 2);
             Assert.IsTrue(slice2.Contains(note3));
             Assert.IsTrue(slice2.Contains(note4));
-            Assert.AreEqual(slice2.Count(), 2);
+            Assert.AreEqual(slice2.Count, 2);
             Assert.IsTrue(slice3.Contains(note5));
-            Assert.AreEqual(slice3.Count(), 1);
+            Assert.AreEqual(slice3.Count, 1);
         }
 
         [TestMethod]
         public void TestUpdate_Valid()
         {
-            IStorage storage = new SQLiteStorage("Data Source= #TestDb.db");
+            IStorage storage = new SQLiteStorage();
             var noteRepos = storage.GetRepository<INoteRepository>();
 
             string title = "title";
@@ -105,7 +105,7 @@ namespace TestNoteProject
         [TestMethod]
         public void TestUpdate_Invalid()
         {
-            IStorage storage = new SQLiteStorage("Data Source= #TestDb.db");
+            IStorage storage = new SQLiteStorage();
             var noteRepos = storage.GetRepository<INoteRepository>();
 
             string title = "title";
@@ -126,7 +126,7 @@ namespace TestNoteProject
         [TestMethod]
         public void TestDelete_Valid()
         {
-            IStorage storage = new SQLiteStorage("Data Source= #TestDb.db");
+            IStorage storage = new SQLiteStorage();
             var noteRepos = storage.GetRepository<INoteRepository>();
 
             string title = "title";
@@ -143,13 +143,13 @@ namespace TestNoteProject
             noteRepos = storage.GetRepository<INoteRepository>();
             IList<Note> slice = noteRepos.Read(0, 1).ToList();
 
-            Assert.AreEqual(slice.Count(), 0);
+            Assert.AreEqual(slice.Count, 0);
         }
 
         [TestMethod]
         public void TestDelete_Invalid()
         {
-            IStorage storage = new SQLiteStorage("Data Source= #TestDb.db");
+            IStorage storage = new SQLiteStorage();
             var noteRepos = storage.GetRepository<INoteRepository>();
 
             string title = "title";

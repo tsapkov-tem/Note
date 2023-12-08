@@ -137,3 +137,4 @@ C:\Users\Administrator\source\repos\Notes\TestNoteProject\obj\Debug\net7.0\refin
 C:\Users\Administrator\source\repos\Notes\TestNoteProject\obj\Debug\net7.0\TestNoteProject.pdb
 C:\Users\Administrator\source\repos\Notes\TestNoteProject\obj\Debug\net7.0\TestNoteProject.genruntimeconfig.cache
 C:\Users\Administrator\source\repos\Notes\TestNoteProject\obj\Debug\net7.0\ref\TestNoteProject.dll
+C:\Users\Administrator\source\repos\Notes\TestNoteProject\bin\Debug\net7.0\NLog.dll

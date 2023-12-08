@@ -85,6 +85,7 @@ namespace Notes.Repository.ClassesOfRepositories
             if (disposed)
                 if (disposing)
                     Context.Dispose();
+            disposed = true;
         }
 
         public void Dispose()

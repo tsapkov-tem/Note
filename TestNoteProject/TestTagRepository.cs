@@ -16,7 +16,7 @@ namespace TestNoteProject
         [TestMethod]
         public void TestAdd()
         {
-            IStorage storage = new SQLiteStorage("Data Source= #TestDb.db");
+            IStorage storage = new SQLiteStorage();
             var tagRepos = storage.GetRepository<ITagRepository>();
             string name = Guid.NewGuid().ToString();
             var tag = new Tag(name);
@@ -27,7 +27,7 @@ namespace TestNoteProject
         [TestMethod]
         public void TestRead()
         {
-            IStorage storage = new SQLiteStorage("Data Source= #TestDb.db");
+            IStorage storage = new SQLiteStorage();
             var tagRepos = storage.GetRepository<ITagRepository>();
 
             string name1 = "name1";
@@ -68,7 +68,7 @@ namespace TestNoteProject
         [TestMethod]
         public void TestUpdate_Valid()
         {
-            IStorage storage = new SQLiteStorage("Data Source= #TestDb.db");
+            IStorage storage = new SQLiteStorage();
             var tagRepos = storage.GetRepository<ITagRepository>();
 
             string name1 = "name1";
@@ -91,7 +91,7 @@ namespace TestNoteProject
         [TestMethod]
         public void TestUpdate_Invalid()
         {
-            IStorage storage = new SQLiteStorage("Data Source= #TestDb.db");
+            IStorage storage = new SQLiteStorage();
             var tagRepos = storage.GetRepository<ITagRepository>();
 
             string name1 = "name1";
@@ -110,7 +110,7 @@ namespace TestNoteProject
         [TestMethod]
         public void TestDelete_Valid()
         {
-            IStorage storage = new SQLiteStorage("Data Source= #TestDb.db");
+            IStorage storage = new SQLiteStorage();
             var tagRepos = storage.GetRepository<ITagRepository>();
 
             string name1 = "name1";
@@ -132,7 +132,7 @@ namespace TestNoteProject
         [TestMethod]
         public void TestDelete_Invalid()
         {
-            IStorage storage = new SQLiteStorage("Data Source= #TestDb.db");
+            IStorage storage = new SQLiteStorage();
             var tagRepos = storage.GetRepository<ITagRepository>();
 
             string name1 = "name1";

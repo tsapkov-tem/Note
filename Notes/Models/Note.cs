@@ -1,6 +1,7 @@
 ﻿using Notes.Repository.InterfacesOfStorage;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace Notes.Models
 {
@@ -93,7 +94,12 @@ namespace Notes.Models
         /// <summary>
         /// Ссылки на тэги для заметки.
         /// </summary>
+        [JsonIgnore]
         public List<Tag> Tags { get; set; } = new();
+        /// <summary>
+        /// Ссылки на оповещения для заметки.
+        /// </summary>
+        [JsonIgnore]
         public List<Push> Pushes { get; set; } = new();
 
         /// <summary>

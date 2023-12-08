@@ -2,5 +2,5 @@
 
 namespace Notes.Repository.InterfacesOfRepositories
 {
-    public interface INoteRepository : IRepository, ICrudRepository<Note> { }
+    public interface INoteRepository : IRepository, ICrudRepository<Note> {}
 }

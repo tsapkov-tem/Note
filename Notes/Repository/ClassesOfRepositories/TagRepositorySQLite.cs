@@ -43,7 +43,7 @@ namespace Notes.Repository.ClassesOfRepositories
         /// <returns> Слайс тэгов. </returns>
         public IEnumerable<Tag> Read(int page, int size)
         {
-            return Tags.Skip(page * size).Take(size).ToList();
+            return Tags.Skip(page * size).Take(size).Include(t=>t.Notes).ToList();
         }
 
         /// <summary>
@@ -81,6 +81,7 @@ namespace Notes.Repository.ClassesOfRepositories
             if (disposed)
                 if (disposing)
                     Context.Dispose();
+            disposed = true;
         }
 
         public void Dispose()
