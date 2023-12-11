@@ -27,7 +27,7 @@ namespace Notes.TestDbSQLite
         public SQLiteDbContext(string connectionString)
         {
             ConnectionString = connectionString;
-            Database.EnsureDeleted();
+            //Database.EnsureDeleted();
             Database.EnsureCreated();
         }
 

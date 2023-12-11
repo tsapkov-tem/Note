@@ -71,8 +71,13 @@ namespace TestNoteProject
             IStorage storage = new SQLiteStorage();
             var tagRepos = storage.GetRepository<ITagRepository>();
 
+            Note note = new Note("title1");
+            Note note2 = new Note("title2");
+
             string name1 = "name1";
             var tag1 = new Tag(name1);
+            tag1.Notes.Add(note);
+            tag1.Notes.Add(note2);
 
             tagRepos.Create(tag1);
             storage.Save();
@@ -86,25 +91,8 @@ namespace TestNoteProject
             IList<Tag> slice = tagRepos.Read(0, 1).ToList();
 
             Assert.AreEqual(slice[0].Name, tag1.Name);
-        }
-
-        [TestMethod]
-        public void TestUpdate_Invalid()
-        {
-            IStorage storage = new SQLiteStorage();
-            var tagRepos = storage.GetRepository<ITagRepository>();
-
-            string name1 = "name1";
-            var tag1 = new Tag(name1);
-
-            tagRepos.Create(tag1);
-            storage.Save();
-            tagRepos = storage.GetRepository<ITagRepository>();
-
-            string name2 = "name2";
-            var tag2 = new Tag(name2);
-
-            Assert.ThrowsException<ArgumentException>(() => tagRepos.Update(tag2));
+            Assert.AreEqual(slice[0].Notes[0], note);
+            Assert.AreEqual(slice[0].Notes[1], note2);
         }
 
         [TestMethod]

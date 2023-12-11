@@ -103,27 +103,6 @@ namespace TestNoteProject
         }
 
         [TestMethod]
-        public void TestUpdate_Invalid()
-        {
-            IStorage storage = new SQLiteStorage();
-            var noteRepos = storage.GetRepository<INoteRepository>();
-
-            string title = "title";
-            string text = "text";
-            var note = new Note(title, text);
-
-            noteRepos.Create(note);
-            storage.Save();
-            noteRepos = storage.GetRepository<INoteRepository>();
-
-            string title1 = "title1";
-            string text1 = "text1";
-            var note1 = new Note(title1, text1);
-
-            Assert.ThrowsException<ArgumentException>(() => noteRepos.Update(note1));
-        }
-
-        [TestMethod]
         public void TestDelete_Valid()
         {
             IStorage storage = new SQLiteStorage();

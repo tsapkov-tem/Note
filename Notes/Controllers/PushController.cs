@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using NLog;
 using Notes.Models;
 using Notes.Repository.InterfacesOfRepositories;
@@ -9,13 +10,16 @@ namespace Notes.Controllers
     /// <summary>
     /// Контроллер пушей.
     /// </summary>
+    [Route("api/[controller]")]
     public class PushController : Controller
     {
         readonly IStorage Storage;
         readonly IPushRepository PushRepos;
+        readonly Logger logger;
 
         public PushController(IStorage storage)
         {
+            logger = LogManager.GetLogger("main");
             Storage = storage;
             PushRepos = storage.GetRepository<IPushRepository>();
         }
@@ -26,21 +30,26 @@ namespace Notes.Controllers
         /// <param name="push"> Пуш для создания. </param>
         /// <returns> Созданный пуш. </returns>
         /// 
-        [Route("Create")]
+        [Route("create")]
         [HttpPost]
-        public JsonResult CreatePush([FromBody] Push push)
+        public IActionResult CreatePush([FromBody] Note note)
         {
-            return Json(PushRepos.Create(push));
-        }
-
-        /// <summary>
-        /// Сохранить все изменения.
-        /// </summary>
-        [Route("Save")]
-        [HttpPost]
-        public void SaveNotes()
-        {
-            Storage.Save();
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var push = new Push(note);
+                    PushRepos.Create(push);
+                    Storage.Save();
+                    return Ok(push);
+                }
+            }
+            catch(ArgumentException ex)
+            {
+                logger.Error(ex.Message);
+                return BadRequest(ex.Message);
+            }
+            return BadRequest(ModelState);
         }
     }
 }

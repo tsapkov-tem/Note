@@ -53,10 +53,7 @@ namespace Notes.Repository.ClassesOfRepositories
         /// <returns> Измененный тэг. </returns>
         public Tag Update(Tag tag)
         {
-            if (Tags.Find(tag.Id) is null)
-            {
-                throw new ArgumentException("Попытка изменить тэг, которого нет в базе данных");
-            }
+            Context.Notes.AttachRange(tag.Notes);
             Tags.Entry(tag).State = EntityState.Modified;
             return tag;
         }

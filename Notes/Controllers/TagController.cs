@@ -29,77 +29,67 @@ namespace Notes.Controllers
         /// </summary>
         /// <param name="page"> Порядковый номер слайса. </param>
         /// <param name="size"> Размер слайса. </param>
-        /// <returns> Слайс тэгов.(Json) </returns>
         [Route("tags")]
         [HttpGet]
-        public JsonResult GetTags(int page, int size)
+        public IEnumerable<Tag> GetTags(int page, int size)
         {
-            var list = TagRepos.Read(page, size);
-            return Json(data: list);
+            var result = TagRepos.Read(page, size).ToList();
+            return result;
         }
 
         /// <summary>
         /// Изменить тэг.
         /// </summary>
         /// <param name="tag"> Тэг для изменения. </param>
-        /// <returns> Измененный тэг.(Json) </returns>
         [Route("update")]
         [HttpPost]
-        public JsonResult UpdateTag([FromBody] Tag tag)
+        public IActionResult UpdateTag([FromBody] Tag tag)
         {
-            try
+            if (ModelState.IsValid)
             {
                 TagRepos.Update(tag);
+                Storage.Save();
+                return Ok(tag);
             }
-            catch (ArgumentException ex)
-            {
-                logger.Error(ex.Message);
-                return Json(ex.Message);
-            }
-            return Json(tag);
+            return BadRequest(ModelState);
         }
 
         /// <summary>
         /// Создать новый тэг.
         /// </summary>
         /// <param name="tag"> Тэг для создания. </param>
-        /// <returns> Созданный тэг.(Json) </returns>
-        [Route("Create")]
+        [Route("create")]
         [HttpPost]
-        public JsonResult CreateTag([FromBody] Tag tag)
+        public IActionResult CreateTag([FromBody] Tag tag)
         {
-            return Json(TagRepos.Create(tag));
+            if (ModelState.IsValid)
+            {
+                TagRepos.Create(tag);
+                Storage.Save();
+                return Ok(tag);
+            }
+            return BadRequest(ModelState);
         }
 
         /// <summary>
         /// Удалить тэг.
         /// </summary>
         /// <param name="id"> Айди тэга. </param>
-        /// <returns> True, если удалено. </returns>
-        [Route("Delete")]
+        [Route("delete")]
         [HttpPost]
-        public JsonResult DeleteTag(int id)
+        public IActionResult DeleteTag(int id)
         {
             try
             {
                 TagRepos.Delete(id);
+                Storage.Save();
             }
             catch (ArgumentException ex)
             {
                 logger.Error(ex.Message);
-                return Json(ex.Message);
+                return BadRequest(ex.Message);
             }
-            return Json(true);
-        }
-
-        /// <summary>
-        /// Сохранение всех изменений тэгов.
-        /// </summary>
-        [Route("Save")]
-        [HttpPost]
-        public void SaveTags()
-        {
-            Storage.Save();
+            return Ok(true);
         }
     }
 }

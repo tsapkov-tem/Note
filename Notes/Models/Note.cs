@@ -131,5 +131,11 @@ namespace Notes.Models
         {
             DatePin = date;
         }
+
+        /// <summary>
+        /// Пустой конструктор для Json.
+        /// Должен не использоваться самостоятельно.
+        /// </summary>
+        public Note() { }
     }
 }

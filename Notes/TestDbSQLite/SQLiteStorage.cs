@@ -55,9 +55,9 @@ namespace Notes.TestDbSQLite
         /// <summary>
         /// Сохранение изменений в базе данных.
         /// </summary>
-        public void Save()
+        public async Task Save()
         {
-            StorageContext.SaveChanges();
+            await StorageContext.SaveChangesAsync();
         }
     }
 }

@@ -32,69 +32,46 @@ namespace Notes.Controllers
         /// </summary>
         /// <param name="page"> Порядковый номер слайса. </param>
         /// <param name="size"> Размер слайса. </param>
-        /// <returns> Слайс заметок.(Json) </returns>
         [Route("notes")]
         [HttpGet]
-        public JsonResult GetNotes(int page, int size)
+        public IEnumerable<Note> GetNotes(int page, int size)
         {
-            var list = NoteRepos.Read(page, size);
-            return Json(data: list);
+            var result = NoteRepos.Read(page, size).ToList();
+            return result;
         }
 
         /// <summary>
         /// Изменить заметку.
         /// </summary>
         /// <param name="note"> Заметка для изменения. </param>
-        /// <returns> Измененная заметка.(Json) </returns>
         [Route("update")]
         [HttpPost]
-        public JsonResult UpdateNotes([FromBody] Note note)
+        public IActionResult UpdateNotes([FromBody] Note note)
         {
-            try
+            if (ModelState.IsValid)
             {
                 NoteRepos.Update(note);
+                Storage.Save();
+                return Ok(note);
             }
-            catch(ArgumentException ex)
-            {
-                logger.Error(ex.Message);
-                return Json(ex.Message);
-            }
-            return Json(note);
-        }
-
-        /// <summary>
-        /// Добавить тэг к заметке.
-        /// </summary>
-        /// <param name="note"></param>
-        /// <param name="tag"></param>
-        /// <returns></returns>
-        [Route("update/addTag")]
-        [HttpPost]
-        public JsonResult UpdateNote([FromBody] Note note, [FromBody] Tag tag)
-        {
-            note.Tags.Add(tag);
-            try
-            {
-                NoteRepos.Update(note);
-            }
-            catch (ArgumentException ex)
-            {
-                logger.Error(ex.Message);
-                return Json(ex.Message);
-            }
-            return Json(note);
+            return BadRequest(ModelState);
         }
 
         /// <summary>
         /// Создать новую заметку.
         /// </summary>
         /// <param name="note"> Заметка для создания. </param>
-        /// <returns> Созданная заметка.(Json) </returns>
-        [Route("Create")]
+        [Route("create")]
         [HttpPost]
-        public JsonResult CreateNotes([FromBody] Note note)
+        public IActionResult CreateNotes([FromBody] Note note)
         {
-            return Json(NoteRepos.Create(note));
+            if (ModelState.IsValid)
+            {
+                NoteRepos.Create(note);
+                Storage.Save();
+                return Ok(note);
+            }
+            return BadRequest(ModelState);
         }
 
         /// <summary>
@@ -102,30 +79,21 @@ namespace Notes.Controllers
         /// </summary>
         /// <param name="id"> Айди заметки. </param>
         /// <returns> True, если удалено. </returns>
-        [Route("Delete")]
+        [Route("delete")]
         [HttpPost]
-        public JsonResult DeleteNotes(int id)
+        public IActionResult DeleteNotes(int id)
         {
             try
             {
                 NoteRepos.Delete(id);
-            }catch(ArgumentException ex)
+                Storage.Save();                
+            }
+            catch(ArgumentException ex)
             {
                 logger.Error(ex.Message);
-                return Json(ex.Message);
+                return BadRequest(ex.Message);
             }
-            return Json(true);
-        }
-
-        /// <summary>
-        /// Сохранить все изменения.
-        /// </summary>
-        [Route("Save")]
-        [HttpPost]
-        public void SaveNotes()
-        {
-            Storage.Save();
+            return Ok(true);
         }
     }
-
 }

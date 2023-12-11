@@ -43,6 +43,7 @@ namespace Notes.Models
             {
                 throw new ArgumentException("Создание пуш-уведомления невозможно для заметки c датой напоминания раньше, чем сейчас.");
             }
+            IdNote = note.Id;
             Note = note;
             Date = (DateTime)note.DatePin;
         }

@@ -16,6 +16,6 @@ namespace Notes.Repository.InterfacesOfStorage
         /// <summary>
         /// Сохранить изменения в базе дынных.
         /// </summary>
-        public void Save();
+        public Task Save();
     }
 }

@@ -54,13 +54,8 @@ namespace Notes.Repository.ClassesOfRepositories
         /// </summary>
         /// <param name="note"> Измененная заметка. </param>
         /// <returns> Измененная заметка. </returns>
-        /// <exception cref="ArgumentException"> Заметка для изменения отсутствует в ЬД. </exception>
         public Note Update(Note note)
         {
-            if(Notes.Find(note.Id) is null)
-            {
-                throw new ArgumentException("Попытка изменить заметку, которой нет в базе данных");
-            }
             Notes.Entry(note).State = EntityState.Modified;
             return note;
         }
